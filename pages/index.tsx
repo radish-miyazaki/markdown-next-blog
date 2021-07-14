@@ -1,10 +1,7 @@
 import Layout from "@/components/Layout";
-import * as fs from "fs";
-import path from "path";
-import matter from "gray-matter";
 import Link from "next/link";
 import Post from "@/components/Post";
-import {sortByDate} from "@/utils/index";
+import getPosts from "@/lib/posts";
 
 const HomePage = ({posts}) => {
   return (
@@ -17,7 +14,7 @@ const HomePage = ({posts}) => {
           ))
         }
       </div>
-      <Link href="/blog">
+      <Link href={"/blog"}>
         <a className="block text-center border border-gray-500 text-gray-800 rounded-md py-4 my-5
         transition duration-500 ease select-none hover:text-white hover:bg-gray-900
         focus:outline-none focus:shadow-outline w-full">
@@ -31,23 +28,10 @@ const HomePage = ({posts}) => {
 export default HomePage
 
 export const getStaticProps = () => {
-  const files = fs.readdirSync(path.join('posts'))
-  const posts = files.map(filename => {
-    const slug: string = filename.replace('.md', '')
-    const markdownWithMeta = fs.readFileSync(path.join('posts', filename), 'utf-8')
-
-    const {data: frontmatter} = matter(markdownWithMeta)
-
-    return {
-      slug,
-      frontmatter
-    }
-  })
-
   return {
     props: {
       // ホーム画面には最大6つのBlogを表示　
-      posts: posts.sort(sortByDate).slice(0,6),
+      posts: getPosts().slice(0,6),
     }
   }
 }
