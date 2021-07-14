@@ -6,7 +6,7 @@ import Link from "next/link";
 import Post from "@/components/Post";
 import {sortByDate} from "@/utils/index";
 
-export default function HomePage({posts}) {
+const HomePage = ({posts}) => {
   return (
     <Layout>
       <h1 className="text-4xl border-b-4 p-5 font-bold">Latest Posts</h1>
@@ -27,6 +27,8 @@ export default function HomePage({posts}) {
     </Layout>
   )
 }
+
+export default HomePage
 
 export const getStaticProps = () => {
   const files = fs.readdirSync(path.join('posts'))
