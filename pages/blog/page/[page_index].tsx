@@ -24,6 +24,7 @@ const BlogPage = ({posts, numPages, currentPage, categories}) => {
           </div>
           <Pagination currentPage={currentPage} numPages={numPages} />
         </div>
+        {/* TODO: 画面が小さい場合は非表示にする */}
         <div className="w-1/4">
           <CategoryList categories={categories} />
         </div>
